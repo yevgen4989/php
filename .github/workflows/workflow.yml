@@ -1,0 +1,244 @@
+name: Build docker image
+
+on:
+  push:
+    branches:
+    - master
+
+    tags:
+    - '*'
+
+  pull_request:
+
+env:
+  PHP81: '8.1.2'
+  PHP80: '8.0.15'
+  PHP74: '7.4.27'
+  PHP73: '7.3.33'
+  PHP72: 7.2.34
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+jobs:
+  php81:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '8'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP81 }}
+        tags: 8.1,8,latest
+        workdir: 8
+        platform: linux/amd64,linux/arm64
+  php80:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '8'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP80 }}
+        tags: '8.0'
+        workdir: 8
+        platform: linux/amd64,linux/arm64
+  php74:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '7'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP74 }}
+        tags: 7.4,7
+        workdir: 7
+        platform: linux/amd64,linux/arm64
+  php73:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '7'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP73 }}
+        tags: 7.3
+        workdir: 7
+        platform: linux/amd64,linux/arm64
+  ### dev
+  php81-dev:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '8'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP81 }}
+        dev: 1
+        tags: 8.1-dev,8-dev,dev
+        workdir: 8
+        platform: linux/amd64,linux/arm64
+  php80-dev:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '8'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP80 }}
+        dev: 1
+        tags: 8.0-dev
+        workdir: 8
+        platform: linux/amd64,linux/arm64
+  php74-dev:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '7'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP74 }}
+        dev: 1
+        tags: 7.4-dev,7-dev
+        workdir: 7
+        platform: linux/amd64,linux/arm64
+  php73-dev:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '7'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP73 }}
+        dev: 1
+        tags: 7.3-dev
+        workdir: 7
+        platform: linux/amd64,linux/arm64
+  ### dev-macos
+  php81-dev-macos:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '8'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP81 }}
+        dev: 1
+        user_id: 501
+        group_id: 20
+        tags: 8.1-dev-macos,8-dev-macos,dev-macos
+        workdir: 8
+        platform: linux/amd64,linux/arm64
+  php80-dev-macos:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '8'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP80 }}
+        dev: 1
+        user_id: 501
+        group_id: 20
+        tags: 8.0-dev-macos
+        workdir: 8
+        platform: linux/amd64,linux/arm64
+  php74-dev-macos:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '7'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP74 }}
+        dev: 1
+        user_id: 501
+        group_id: 20
+        tags: 7.4-dev-macos,7-dev-macos
+        workdir: 7
+        platform: linux/amd64,linux/arm64
+  php73-dev-macos:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: '7'
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+      with:
+        platforms: linux/amd64,linux/arm64
+    - uses: docker/setup-buildx-action@v1
+    - uses: ./.github/actions
+      with:
+        version: ${{ env.PHP73 }}
+        dev: 1
+        user_id: 501
+        group_id: 20
+        tags: 7.3-dev-macos
+        workdir: 7
+        platform: linux/amd64,linux/arm64

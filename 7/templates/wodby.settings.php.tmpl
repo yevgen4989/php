@@ -1,0 +1,29 @@
+<?php
+/**
+ * @file
+ * Environment configuration for generic PHP project.
+ */
+
+{{ if getenv "SUPER_HOSTS" }}{{ range jsonArray (getenv "SUPER_HOSTS") }}
+$super['hosts'][] = '{{ . }}';
+{{ end }}{{ end }}
+
+$super['files_dir'] = '{{ getenv "FILES_DIR" }}';
+
+$super['db']['host'] = '{{ getenv "DB_HOST" }}';
+$super['db']['name'] = '{{ getenv "DB_NAME" }}';
+$super['db']['username'] = '{{ getenv "DB_USER" }}';
+$super['db']['password'] = '{{ getenv "DB_PASSWORD" }}';
+$super['db']['driver'] = '{{ getenv "DB_DRIVER" }}';
+
+$super['redis']['host'] = '{{ getenv "REDIS_HOST" }}';
+$super['redis']['port'] = '{{ getenv "REDIS_PORT" "6379" }}';
+$super['redis']['password'] = '{{ getenv "REDIS_PASSWORD" }}';
+
+$super['varnish']['host'] = '{{ getenv "VARNISH_HOST" }}';
+$super['varnish']['terminal_port'] = '{{ getenv "VARNISH_TERMINAL_PORT" "6082" }}';
+$super['varnish']['secret'] = '{{ getenv "VARNISH_SECRET" }}';
+$super['varnish']['version'] = '{{ getenv "VARNISH_VERSION" }}';
+
+$super['memcached']['host'] = '{{ getenv "MEMCACHED_HOST" }}';
+$super['memcached']['port'] = '{{ getenv "MEMCACHED_PORT" "11211" }}';
