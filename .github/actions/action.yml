@@ -37,7 +37,6 @@ runs:
     run: |
       set -e
       make buildx-build-amd64
-      make test
       make buildx-build
       . $GITHUB_ACTION_PATH/release.sh
     shell: bash
